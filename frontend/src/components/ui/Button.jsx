@@ -1,4 +1,3 @@
-
 import { colors, radius, typography } from '../../config/theme';
 
 /**
@@ -6,7 +5,7 @@ import { colors, radius, typography } from '../../config/theme';
  */
 const variants = {
   primary: {
-    background: colors.brand.gradient,
+    background: colors.brand.primary, // Solid brand color (Teal)
     color: 'white',
     boxShadow: `0 0 20px ${colors.brand.glow}`,
   },
@@ -35,6 +34,7 @@ export const Button = ({
   disabled = false,
   fullWidth = false,
   onClick,
+  style,
   ...props 
 }) => {
   const variantStyles = variants[variant];
@@ -55,8 +55,10 @@ export const Button = ({
     opacity: disabled ? 0.5 : 1,
     width: fullWidth ? '100%' : 'auto',
     transition: 'all 0.2s ease',
+    ...style,
   };
 
+  // Add text animation class if it's the primary variant
   return (
     <button 
       style={buttonStyles} 
@@ -65,7 +67,7 @@ export const Button = ({
       {...props}
     >
       {icon && <span>{icon}</span>}
-      {children}
+      <span>{children}</span>
     </button>
   );
 };

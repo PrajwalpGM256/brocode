@@ -1,11 +1,12 @@
 import { colors, spacing, radius, typography } from '../../../config/theme';
 import { REVIEW_TYPES } from '../../../data/constants';
+import { Zap, Upload, FileCode } from 'lucide-react';
 import Input from '../../ui/Input';
 import Select from '../../ui/Select';
 import Button from '../../ui/Button';
 
 /**
- * SettingsPanel Component - Configuration form in sidebar
+ * SettingsPanel Component - Technical Sidebar Form
  */
 export const SettingsPanel = ({ 
   filename,
@@ -18,64 +19,103 @@ export const SettingsPanel = ({
   loading,
   disabled,
 }) => {
-  const cardStyles = {
-    background: colors.bg.secondary,
-    borderRadius: radius.lg,
-    padding: spacing.lg,
-    border: `1px solid ${colors.border.default}`,
+  const containerStyles = {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: spacing.xl,
+    height: '100%',
   };
 
-  const headerStyles = {
-    fontSize: typography.fontSize.xs,
-    fontWeight: '500',
+  const sectionLabelStyles = {
+    fontSize: '11px',
+    fontWeight: '600',
     color: colors.text.muted,
     textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-    marginBottom: spacing.lg,
+    letterSpacing: '1px',
+    marginBottom: spacing.md,
+    fontFamily: typography.fontFamily.mono,
+    display: 'flex',
+    alignItems: 'center',
+    gap: spacing.sm,
   };
 
   const formStyles = {
     display: 'flex',
     flexDirection: 'column',
-    gap: spacing.md,
+    gap: spacing.lg,
   };
 
-  const linkStyles = {
-    fontSize: typography.fontSize.xs,
-    color: colors.brand.primary,
-    background: 'none',
-    border: 'none',
-    cursor: 'pointer',
-    padding: 0,
+  const actionsRowStyles = {
+    display: 'grid',
+    gridTemplateColumns: '1fr 1fr',
+    gap: spacing.sm,
     marginTop: spacing.sm,
-    textDecoration: 'underline',
+  };
+
+  // Mini Action Button Style
+  const actionBtnStyles = {
+    background: colors.bg.tertiary,
+    border: `1px solid ${colors.border.default}`,
+    borderRadius: radius.md,
+    padding: '8px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: '6px',
+    color: colors.text.secondary,
+    fontSize: '11px',
+    fontFamily: typography.fontFamily.mono,
+    cursor: 'pointer',
+    transition: 'all 0.2s ease',
+    textDecoration: 'none',
+    width: '100%',
   };
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: spacing.lg }}>
-      <div style={cardStyles}>
-        <div style={headerStyles}>Configuration</div>
+    <div style={containerStyles}>
+      
+      {/* Configuration Section */}
+      <div>
         <div style={formStyles}>
           <Input
-            label="Filename"
+            label="TARGET_FILENAME"
             value={filename}
             onChange={(e) => setFilename(e.target.value)}
-            placeholder="example.js"
+            placeholder="src/main.js"
           />
           <Select
-            label="Review Type"
+            label="ANALYSIS_MODE"
             value={reviewType}
             onValueChange={setReviewType}
             options={REVIEW_TYPES}
           />
         </div>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: spacing.sm }}>
-          <button style={linkStyles} onClick={onLoadSample} type="button">
-            Load sample code
+
+        {/* Quick Actions */}
+        <div style={actionsRowStyles}>
+          <button 
+            style={actionBtnStyles} 
+            onClick={onLoadSample} 
+            type="button"
+            className="hover:border-primary/50 hover:text-primary"
+          >
+            <FileCode size={12} />
+            LOAD SAMPLE
           </button>
           
-          <label style={{...linkStyles, cursor: 'pointer'}}>
-            Upload file
+          <label 
+            style={{
+              ...actionBtnStyles, 
+              background: '#ccff00', 
+              color: '#000', 
+              border: 'none',
+              fontWeight: '600',
+              cursor: 'pointer'
+            }}
+            className="hover:opacity-90"
+          >
+            <Upload size={12} color="#000" />
+            UPLOAD FILE
             <input 
               type="file" 
               style={{ display: 'none' }} 
@@ -84,16 +124,31 @@ export const SettingsPanel = ({
             />
           </label>
         </div>
+
+        {/* Primary Action - Now directly below actions */}
+        <div style={{ marginTop: spacing.lg }}> 
+          <Button
+            icon={<Zap size={16} />}
+            onClick={onSubmit}
+            disabled={disabled || loading}
+            fullWidth
+            size="lg"
+          >
+            {loading ? 'INITIALIZING...' : 'RUN_ANALYSIS'}
+          </Button>
+        </div>
       </div>
 
-      <Button
-        icon="✨"
-        onClick={onSubmit}
-        disabled={disabled || loading}
-        fullWidth
-      >
-        {loading ? 'Analyzing...' : 'Analyze Code'}
-      </Button>
+      {/* Primary Action - Pushed to bottom of valid area or just spaced out */}
+
+      
+      {/* Inline styles for hover effects since we're using heavy inline styles */}
+      <style>{`
+        button:hover, label:hover {
+          border-color: ${colors.border.hover} !important;
+          color: ${colors.text.primary} !important;
+        }
+      `}</style>
     </div>
   );
 };

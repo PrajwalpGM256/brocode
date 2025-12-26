@@ -27,6 +27,7 @@ const EditorPanel = ({ code, setCode, loading }) => {
     justifyContent: 'space-between',
     padding: `0 ${spacing.lg}`,
     userSelect: 'none',
+    position: 'relative', // For absolute centering of title
   };
 
   const titleStyles = {
@@ -57,10 +58,22 @@ const EditorPanel = ({ code, setCode, loading }) => {
       {loading && <Loading message="Analyzing your code..." />}
       
       <div style={headerStyles}>
-        <div style={titleStyles}>
+        {/* Centered Title */}
+        <div style={{
+          position: 'absolute',
+          left: '50%',
+          transform: 'translateX(-50%)',
+          display: 'flex',
+          alignItems: 'center',
+          gap: spacing.sm,
+        }}>
           <span style={{ fontSize: '16px' }}>💻</span>
           <span style={labelStyles}>Editor</span>
         </div>
+        
+        {/* Spacer to push stats to right */}
+        <div style={{ flex: 1 }} />
+        
         <div style={statsStyles}>
           <span>{stats.lines} lines</span>
           <span>{stats.chars} chars</span>

@@ -7,9 +7,11 @@ export const colors = {
   // Backgrounds - True blacks with subtle warmth
   bg: {
     primary: '#0a0a0b',
+    deep: '#050505', // Deep matte black for canvas/immersive areas
     secondary: 'rgba(255,255,255,0.02)',
-    tertiary: 'rgba(255,255,255,0.04)',
+    tertiary: '#09090b', // Solid tertiary for clean overlays (Selects, Cards)
     elevated: 'rgba(255,255,255,0.06)',
+    overlay: 'rgba(5, 5, 5, 0.9)', // Heavy blur overlay for loading
   },
 
   // Text - Zinc scale for better contrast
@@ -28,12 +30,12 @@ export const colors = {
     focus: 'rgba(99,102,241,0.5)',
   },
 
-  // Brand - Indigo/Violet gradient
+  // Brand - Teal/Cyan
   brand: {
-    primary: '#6366f1',
-    secondary: '#8b5cf6',
-    gradient: 'linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)',
-    glow: 'rgba(99,102,241,0.3)',
+    primary: '#006f85',
+    secondary: '#008ba6',
+    gradient: 'linear-gradient(135deg, #006f85 0%, #008ba6 100%)',
+    glow: 'rgba(0, 111, 133, 0.3)',
   },
 
   // Semantic - For status and feedback
@@ -88,4 +90,13 @@ export const typography = {
 export const shadows = {
   glow: '0 0 20px rgba(99,102,241,0.3)',
   card: '0 4px 12px rgba(0,0,0,0.3)',
+  deep: '0 10px 30px -10px rgba(0,0,0,0.5)',
+};
+
+export const interactive = {
+  particles: {
+    primary: 'rgba(0, 212, 255, 0.4)',
+    secondary: 'rgba(124, 58, 237, 0.15)',
+    connection: 'rgba(255, 255, 255, 0.1)',
+  },
 };

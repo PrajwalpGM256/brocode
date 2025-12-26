@@ -1,4 +1,4 @@
-# CodeBro
+# Brocode
 
 AI-powered code review assistant that analyzes your code for bugs, security vulnerabilities, and performance issues using Gemini AI.
 
