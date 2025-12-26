@@ -1,34 +1,31 @@
 import hmac
 import hashlib
-from fastapi import APIRouter, Request, HTTPException, Header
+import asyncio
+from fastapi import APIRouter, Request, HTTPException, Header, BackgroundTasks
 from typing import Optional
 import os
 
 router = APIRouter()
 
+
 def verify_signature(payload: bytes, signature: str, secret: str) -> bool:
     """Verify GitHub webhook signature."""
     if not signature:
         return False
-    
     expected = "sha256=" + hmac.new(
-        secret.encode(),
-        payload,
-        hashlib.sha256
+        secret.encode(), payload, hashlib.sha256
     ).hexdigest()
-    
     return hmac.compare_digest(expected, signature)
 
 
 @router.post("/github")
 async def github_webhook(
     request: Request,
+    background_tasks: BackgroundTasks,
     x_hub_signature_256: Optional[str] = Header(None),
     x_github_event: Optional[str] = Header(None),
 ):
     """Handle GitHub webhook events."""
-    
-    # Get the raw payload
     payload = await request.body()
     
     # Verify signature
@@ -36,23 +33,24 @@ async def github_webhook(
     if secret and not verify_signature(payload, x_hub_signature_256 or "", secret):
         raise HTTPException(status_code=401, detail="Invalid signature")
     
-    # Parse the JSON payload
-    data = await request.json()
+    try:
+        data = await request.json()
+    except Exception:
+        raise HTTPException(status_code=400, detail="Invalid JSON")
     
-    # Handle different event types
     if x_github_event == "ping":
         return {"status": "pong", "message": "Webhook connected successfully!"}
     
     elif x_github_event == "push":
-        return await handle_push(data)
+        return handle_push(data)
     
     elif x_github_event == "pull_request":
-        return await handle_pull_request(data)
+        return await handle_pull_request(data, background_tasks)
     
     return {"status": "ignored", "event": x_github_event}
 
 
-async def handle_push(data: dict):
+def handle_push(data: dict):
     """Handle push events."""
     repo = data.get("repository", {}).get("full_name", "unknown")
     ref = data.get("ref", "")
@@ -60,37 +58,37 @@ async def handle_push(data: dict):
     
     print(f"📦 Push to {repo} on {ref}: {len(commits)} commit(s)")
     
-    return {
-        "status": "received",
-        "event": "push",
-        "repo": repo,
-        "ref": ref,
-        "commits": len(commits)
-    }
+    return {"status": "received", "event": "push", "commits": len(commits)}
 
 
-async def handle_pull_request(data: dict):
+async def handle_pull_request(data: dict, background_tasks: BackgroundTasks):
     """Handle pull request events."""
     action = data.get("action", "")
     pr = data.get("pull_request", {})
-    repo = data.get("repository", {}).get("full_name", "unknown")
+    repo_data = data.get("repository", {})
+    
+    repo_full = repo_data.get("full_name", "")
+    owner, repo = repo_full.split("/") if "/" in repo_full else ("", "")
     
     pr_number = pr.get("number")
     pr_title = pr.get("title", "")
-    pr_url = pr.get("html_url", "")
     
-    print(f"🔀 PR #{pr_number} {action} in {repo}: {pr_title}")
+    print(f"🔀 PR #{pr_number} {action} in {repo_full}: {pr_title}")
     
-    # TODO: Add code review logic here
-    # - Fetch the PR diff
-    # - Send to Gemini for review
-    # - Post comments back to GitHub
+    # Only review on opened or synchronize (new commits pushed)
+    if action in ["opened", "synchronize"]:
+        # Import here to avoid circular imports
+        from app.services.pr_review_service import review_pull_request
+        
+        # Run review in background so we respond quickly to GitHub
+        background_tasks.add_task(review_pull_request, owner, repo, pr_number, pr_title)
+        
+        return {
+            "status": "processing",
+            "event": "pull_request",
+            "action": action,
+            "pr_number": pr_number,
+            "message": "Code review started"
+        }
     
-    return {
-        "status": "received",
-        "event": "pull_request",
-        "action": action,
-        "repo": repo,
-        "pr_number": pr_number,
-        "pr_title": pr_title
-    }
+    return {"status": "ignored", "action": action}

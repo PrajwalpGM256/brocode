@@ -159,5 +159,17 @@ Code to review:
         return base_context + instructions + output_format + code + "\n```"
 
 
-# Global client instance
+    async def generate_review(self, prompt: str) -> str:
+        """
+        Generate a free-form code review from Gemini.
+        Used for PR reviews where we want a markdown response.
+        """
+        try:
+            # We can use the same model
+            response = self.model.generate_content(prompt)
+            return response.text
+        except Exception as e:
+            logger.error(f"Gemini API error (generate_review): {str(e)}")
+            raise
+
 gemini_client = GeminiClient()
