@@ -58,7 +58,7 @@ try:
     print(response.text)
     print("=" * 50)
     
-    print("\n🎉 API connection works! We're ready to build CodeBro.")
+    print("\n🎉 API connection works! We're ready to build BroCode.")
     
 except Exception as e:
     print(f"\n❌ ERROR: {str(e)}")

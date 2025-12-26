@@ -30,7 +30,7 @@ try:
             print(f"   Output token limit: {model.output_token_limit}")
     
     print("\n" + "=" * 60)
-    print("\n💡 Pick one of these model names for CodeBro!")
+    print("\n💡 Pick one of these model names for BroCode!")
     
 except Exception as e:
     print(f"❌ ERROR: {str(e)}")

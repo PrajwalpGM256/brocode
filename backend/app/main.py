@@ -18,8 +18,8 @@ logger = get_logger(__name__)
 
 # Create FastAPI app
 app = FastAPI(
-    title="CodeBro API",
-    description="AI-Powered Code Review Assistant using Claude",
+    title="BroCode API",
+    description="AI-Powered Code Review Assistant using Gemini",
     version="0.1.0",
     docs_url="/docs",
     redoc_url="/redoc"
@@ -43,7 +43,7 @@ app.include_router(webhooks.router, prefix="/api/webhooks", tags=["webhooks"])
 @app.on_event("startup")
 async def startup_event():
     """Run on application startup"""
-    logger.info("Starting CodeBro API")
+    logger.info("Starting BroCode API")
     logger.info(f"Gemini Model: {settings.GEMINI_MODEL}")
     logger.info(f"Debug Mode: {settings.DEBUG}")
 
@@ -51,7 +51,7 @@ async def startup_event():
 @app.on_event("shutdown")
 async def shutdown_event():
     """Run on application shutdown"""
-    logger.info("Shutting down CodeBro API")
+    logger.info("Shutting down BroCode API")
 
 
 if __name__ == "__main__":

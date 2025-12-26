@@ -1,5 +1,5 @@
 """
-Logging configuration for CodeBro
+Logging configuration for BroCode
 """
 import logging
 import sys

@@ -1,7 +1,7 @@
 from app.services.github_service import github_service
 from app.core.gemini_client import gemini_client as gemini # Use the existing global instance
 
-PR_REVIEW_PROMPT = """You are CodeBro, an AI code reviewer. Review this pull request diff and provide helpful feedback.
+PR_REVIEW_PROMPT = """You are BroCode, an AI code reviewer. Review this pull request diff and provide helpful feedback.
 
 ## PR Diff:
 ```
@@ -17,7 +17,7 @@ PR_REVIEW_PROMPT = """You are CodeBro, an AI code reviewer. Review this pull req
 ## Response Format:
 Use this exact format for your review:
 
-## 🤖 CodeBro Review
+## 🤖 BroCode Review
 
 ### Summary
 [Brief 1-2 sentence summary of the changes]
@@ -32,7 +32,7 @@ Use this exact format for your review:
 [Give a brief overall assessment: ✅ Looks good / ⚠️ Needs attention / ❌ Needs fixes]
 
 ---
-*Automated review by CodeBro - AI-Powered Code Review*
+*Automated review by BroCode - AI-Powered Code Review*
 """
 
 

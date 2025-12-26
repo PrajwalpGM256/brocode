@@ -1,5 +1,5 @@
 """
-Configuration management for CodeBro
+Configuration management for BroCode
 """
 import os
 from typing import List
