@@ -6,7 +6,7 @@ AI-powered code review assistant that analyzes your code for bugs, security vuln
 
 - **Frontend:** React, Vite, Tailwind CSS
 - **Backend:** FastAPI, PostgreSQL, SQLAlchemy, Alembic
-- **AI:** Google Gemini 1.5 Flash
+- **AI:** Google Gemini 2.5 Flash
 
 ## Prerequisites
 
