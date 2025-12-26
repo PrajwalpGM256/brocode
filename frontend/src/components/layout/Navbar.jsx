@@ -185,18 +185,7 @@ export const Navbar = ({
 
                 {/* 3. Brand Identity (Moved to Right) */}
                 <div style={brandStyles}>
-                    <div style={{
-                        width: '24px', 
-                        height: '24px', 
-                        background: colors.brand.primary, 
-                        borderRadius: radius.sm,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        
-                    }}>
-                        <Code2 size={14} color="#fff" />
-                    </div>
+                    <APP_INFO.LOGO style={{ width: '24px', height: '24px' }} />
                     {APP_INFO.name}
                 </div>
             </div>

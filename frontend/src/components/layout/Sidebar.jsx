@@ -70,9 +70,7 @@ const SidebarHeader = () => {
 
   return (
     <div style={headerStyles}>
-      <div style={logoBoxStyles}>
-        <Code2 size={20} />
-      </div>
+      <APP_INFO.LOGO style={{ width: '36px', height: '36px' }} />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <span style={titleStyles}>{APP_INFO.name}</span>
       </div>

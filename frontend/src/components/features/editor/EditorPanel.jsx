@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import Loading from '../../ui/Loading';
 import { colors, spacing, typography } from '../../../config/theme';
+import { APP_INFO } from '../../../data/app.data';
 
 const EditorPanel = ({ code, setCode, loading }) => {
   const stats = useMemo(() => ({
@@ -12,7 +13,7 @@ const EditorPanel = ({ code, setCode, loading }) => {
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
-    background: '#1e1e1e', // Darker editor specific background
+    background: 'transparent', // Transparent background
     position: 'relative',
     overflow: 'hidden',
   };
@@ -20,14 +21,14 @@ const EditorPanel = ({ code, setCode, loading }) => {
   const headerStyles = {
     flexShrink: 0,
     height: '40px',
-    background: '#252526',
+    background: 'rgba(37, 37, 38, 0.5)', // Semi-transparent header
     borderBottom: '1px solid #333',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: `0 ${spacing.lg}`,
     userSelect: 'none',
-    position: 'relative', // For absolute centering of title
+    position: 'relative',
   };
 
   const titleStyles = {
@@ -51,6 +52,23 @@ const EditorPanel = ({ code, setCode, loading }) => {
     fontSize: '10px',
     color: '#666',
     fontFamily: typography.fontFamily.mono,
+  };
+
+  // Watermark styles
+  const watermarkStyles = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    fontSize: '33px',
+    fontWeight: '800',
+    color: 'rgba(35, 59, 65, 0.18)', // Teal brand color at 15% opacity
+    textTransform: 'uppercase',
+    letterSpacing: '6px',
+    pointerEvents: 'none',
+    userSelect: 'none',
+    whiteSpace: 'nowrap',
+    zIndex: 0,
   };
 
   return (
@@ -81,6 +99,11 @@ const EditorPanel = ({ code, setCode, loading }) => {
       </div>
 
       <div style={{ flex: 1, position: 'relative' }}>
+        {/* Watermark */}
+        <div style={watermarkStyles}>
+          {APP_INFO.SLOGAN}
+        </div>
+        
         <textarea
           value={code}
           onChange={(e) => setCode(e.target.value)}
@@ -92,13 +115,14 @@ const EditorPanel = ({ code, setCode, loading }) => {
             height: '100%',
             padding: spacing.lg,
             background: 'transparent',
-            color: '#d4d4d4',
+            color: '#ffffff', // Bright white text
             fontFamily: typography.fontFamily.mono,
             fontSize: '13px',
             lineHeight: '1.5',
             resize: 'none',
             outline: 'none',
             border: 'none',
+            zIndex: 1,
           }}
           spellCheck="false"
           autoCapitalize="off"
@@ -111,3 +135,4 @@ const EditorPanel = ({ code, setCode, loading }) => {
 };
 
 export default EditorPanel;
+
