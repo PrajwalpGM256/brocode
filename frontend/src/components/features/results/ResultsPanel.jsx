@@ -35,19 +35,19 @@ const ResultsPanel = ({ result, loading }) => {
   };
 
   const summaryCardStyles = {
-    background: 'rgba(204, 255, 0, 0.9)', // Neon Yellow with Opacity
+    background: '#649b92', // Teal Green
     backdropFilter: 'blur(10px)',
     borderRadius: radius.lg,
     padding: spacing.lg,
     border: 'none',
     marginBottom: spacing.xl,
-    color: '#000', // Black text for contrast
+    color: '#1a1c16', // Darker Olive/Black Text
   };
 
   const summaryTitleStyles = {
     fontSize: typography.fontSize.md,
     fontWeight: '700',
-    color: '#000', // Black title
+    color: '#1a1c16', 
     marginBottom: spacing.sm,
     display: 'flex',
     alignItems: 'center',
@@ -78,8 +78,8 @@ const ResultsPanel = ({ result, loading }) => {
       </div>
 
       <div style={summaryCardStyles}>
-        <h3 style={summaryTitleStyles}><FileText size={18} color="#000" /> EXECUTIVE SUMMARY</h3>
-        <p style={{ color: '#000', lineHeight: '1.6', fontWeight: '500' }}>
+        <h3 style={summaryTitleStyles}><FileText size={18} color="#1a1c16" /> EXECUTIVE SUMMARY</h3>
+        <p style={{ color: '#1a1c16', lineHeight: '1.6', fontWeight: '500' }}>
           {result.summary}
         </p>
       </div>
@@ -87,11 +87,11 @@ const ResultsPanel = ({ result, loading }) => {
       {/* Positive Aspects */}
       {result.positive_aspects?.length > 0 && (
          <div style={summaryCardStyles}>
-            <h3 style={summaryTitleStyles}><Sparkles size={18} color="#000" /> WHAT'S GOOD</h3>
+            <h3 style={summaryTitleStyles}><Sparkles size={18} color="#1a1c16" /> WHAT'S GOOD</h3>
             <ul style={{ listStyle: 'none', padding: 0 }}>
                {result.positive_aspects.map((aspect, i) => (
-                  <li key={i} style={{ display: 'flex', gap: spacing.sm, marginBottom: spacing.sm, color: '#000', fontWeight: '500' }}>
-                      <CheckCircle size={16} color="#000" style={{ flexShrink: 0, marginTop: '2px' }} />
+                  <li key={i} style={{ display: 'flex', gap: spacing.sm, marginBottom: spacing.sm, color: '#1a1c16', fontWeight: '500' }}>
+                      <CheckCircle size={16} color="#1a1c16" style={{ flexShrink: 0, marginTop: '2px' }} />
                       {aspect}
                   </li>
                ))}

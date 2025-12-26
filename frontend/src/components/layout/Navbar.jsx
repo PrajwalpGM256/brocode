@@ -128,15 +128,29 @@ export const Navbar = ({
 
             {/* Main Content */}
             <div style={contentStyles}>
-                {/* 1. Filename Input */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: spacing.xs }}>
-                    <span style={{ fontSize: '10px', color: colors.text.muted, textTransform: 'uppercase' }}>TARGET:</span>
+                {/* 1. Filename Input & Upload */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: spacing.sm }}>
                     <input 
                         style={inputStyles}
                         value={filename}
                         onChange={(e) => setFilename(e.target.value)}
                         placeholder="filename.js"
                     />
+                    
+                    <label style={{
+                        ...actionBtnStyles, 
+                        background: '#ccff00', 
+                        color: '#000', 
+                        border: 'none', 
+                        fontWeight: '700'
+                    }} className="hover:opacity-90">
+                        <Upload size={12} color="#000" /> UPLOAD
+                        <input 
+                            type="file" 
+                            style={{ display: 'none' }} 
+                            onChange={onFileUpload}
+                        />
+                    </label>
                 </div>
 
                 {/* Divider */}
@@ -153,20 +167,7 @@ export const Navbar = ({
                         <FileCode size={12} /> SAMPLE
                     </button>
                     
-                    <label style={{
-                        ...actionBtnStyles, 
-                        background: '#ccff00', 
-                        color: '#000', 
-                        border: 'none', 
-                        fontWeight: '700'
-                    }} className="hover:opacity-90">
-                        <Upload size={12} color="#000" /> UPLOAD
-                        <input 
-                            type="file" 
-                            style={{ display: 'none' }} 
-                            onChange={onFileUpload}
-                        />
-                    </label>
+
 
                     <Button
                         icon={<Play size={14} fill="currentColor" />}
