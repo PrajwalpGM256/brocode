@@ -14,6 +14,7 @@ export const SettingsPanel = ({
   setReviewType,
   onSubmit,
   onLoadSample,
+  onFileUpload,
   loading,
   disabled,
 }) => {
@@ -68,9 +69,21 @@ export const SettingsPanel = ({
             options={REVIEW_TYPES}
           />
         </div>
-        <button style={linkStyles} onClick={onLoadSample} type="button">
-          Load sample code →
-        </button>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: spacing.sm }}>
+          <button style={linkStyles} onClick={onLoadSample} type="button">
+            Load sample code
+          </button>
+          
+          <label style={{...linkStyles, cursor: 'pointer'}}>
+            Upload file
+            <input 
+              type="file" 
+              style={{ display: 'none' }} 
+              onChange={onFileUpload}
+              accept=".js,.jsx,.ts,.tsx,.py,.java,.cpp,.c,.html,.css"
+            />
+          </label>
+        </div>
       </div>
 
       <Button

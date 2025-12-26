@@ -29,6 +29,19 @@ function App() {
     analyzeCode(code, filename, reviewType);
   };
 
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setFilename(file.name);
+    
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setCode(event.target.result);
+    };
+    reader.readAsText(file);
+  };
+
   return (
     <div className="flex h-screen w-screen bg-background text-foreground overflow-hidden font-sans">
       {/* Sidebar - Fixed Width */}
@@ -41,6 +54,7 @@ function App() {
             setReviewType={setReviewType}
             loading={loading}
             onLoadSample={handleLoadSample}
+            onFileUpload={handleFileUpload}
             onSubmit={handleSubmit}
           />
         </Sidebar>
