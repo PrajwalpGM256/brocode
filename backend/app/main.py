@@ -4,9 +4,15 @@ Main FastAPI application
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
 from app.core.config import settings
 from app.api.routes import health, review
 from app.utils.logger import get_logger
+from app.api.routes import webhooks
 
 logger = get_logger(__name__)
 
@@ -31,6 +37,7 @@ app.add_middleware(
 # Include routers
 app.include_router(health.router, prefix="/api", tags=["health"])
 app.include_router(review.router, prefix="/api/review", tags=["review"])
+app.include_router(webhooks.router, prefix="/api/webhooks", tags=["webhooks"])
 
 
 @app.on_event("startup")
