@@ -1,6 +1,6 @@
 import { colors, spacing, radius, typography } from '../../../config/theme';
 import { BarChart, FileText, Sparkles, AlertTriangle, CheckCircle, Search } from 'lucide-react';
-import IssueCard from '../../review/IssueCard';
+import IssueCard from '../../review/issueCard';
 import Badge from '../../ui/Badge';
 import EmptyState from '../../ui/EmptyState';
 
