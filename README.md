@@ -1,4 +1,4 @@
-# BroCode 🤖
+# BroCode ![alt text](frontend/public/robot-svgrepo-com.svg)
 
 AI-powered code review bot that automatically reviews your Pull Requests.
 
