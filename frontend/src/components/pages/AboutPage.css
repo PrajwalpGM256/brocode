@@ -336,7 +336,8 @@
 
 .about-card__body {
     padding: 24px;
-    min-height: 180px;
+    height: 220px;
+    overflow-y: auto;
 }
 
 /* Code Block */
