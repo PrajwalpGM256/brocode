@@ -1,6 +1,7 @@
 import { colors, spacing, radius, typography } from '../../config/theme';
 import { APP_INFO } from '../../data/app.data';
-import { Code2, Upload, Play, FileCode, ChevronLeft, Menu } from 'lucide-react';
+import { Code2, Upload, Play, FileCode, ChevronLeft, Menu, Info } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Button from '../ui/Button';
 
 /**
@@ -185,6 +186,20 @@ export const Navbar = ({
 
                 {/* 3. Brand Identity (Moved to Right) */}
                 <div style={brandStyles}>
+                    <Link to="/about" style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: spacing.xs,
+                        color: colors.text.muted,
+                        textDecoration: 'none',
+                        fontSize: '11px',
+                        marginRight: spacing.md,
+                        padding: `4px 8px`,
+                        borderRadius: radius.sm,
+                        border: `1px solid ${colors.border.default}`,
+                    }} className="hover:text-primary">
+                        <Info size={12} /> About
+                    </Link>
                     <APP_INFO.LOGO style={{ width: '24px', height: '24px' }} />
                     {APP_INFO.name}
                 </div>

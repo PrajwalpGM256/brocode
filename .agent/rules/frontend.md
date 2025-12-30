@@ -66,6 +66,8 @@ Position → Box Model → Typography → Visual → Animation
 - Early returns for guards: `if (!user) return null;`
 - Boolean prefixes: `isLoading`, `hasError`, `canEdit`
 
+- never do inline styling
+
 ## Import Order
 1. External libs → 2. Internal modules → 3. Components → 4. Types → 5. Styles
 
