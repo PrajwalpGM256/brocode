@@ -1,12 +1,15 @@
 import { useState, useRef, useEffect } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Navbar from '@/components/layout/Navbar';
 import EditorPanel from '@/components/features/editor/EditorPanel';
 import ResultsPanel from '@/components/features/results/ResultsPanel';
+import AboutPage from '@/components/pages/AboutPage';
 import { useCodeReview } from '@/hooks/useCodeReview';
 import { SAMPLE_CODE } from '@/data/constants';
 import { colors } from '@/config/theme';
 
-function App() {
+// Main Editor View (extracted for clarity)
+function EditorView() {
   const [code, setCode] = useState('');
   const [filename, setFilename] = useState('example.js');
   
@@ -30,7 +33,7 @@ function App() {
 
   const handleSubmit = (e) => {
     e?.preventDefault();
-    analyzeCode(code, filename, 'general'); // Defaulting to general review for now
+    analyzeCode(code, filename, 'general');
   };
 
   const handleFileUpload = (e) => {
@@ -53,12 +56,9 @@ function App() {
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isResizingEditor.current && appContainerRef.current) {
-        // Calculate percentage relative to the total width
         const appWidth = appContainerRef.current.offsetWidth;
         const relativeX = e.clientX;
         const newPercent = (relativeX / appWidth) * 100;
-        
-        // Constrain between 20% and 80%
         setEditorWidthPercent(Math.max(20, Math.min(newPercent, 80)));
       }
     };
@@ -95,7 +95,7 @@ function App() {
         color: colors.text.primary,
         overflow: 'hidden',
         fontFamily: '"Inter", sans-serif',
-        position: 'relative', // Context for absolute navbar
+        position: 'relative',
       }}
     >
       
@@ -117,10 +117,10 @@ function App() {
         style={{
           flex: 1,
           display: 'flex',
-          overflow: 'hidden', // Contain content
+          overflow: 'hidden',
           marginTop: isNavbarCollapsed ? '0px' : '0px', 
           height: '100%',
-          paddingTop: isNavbarCollapsed ? '0' : '48px', // Push content down only when expanded
+          paddingTop: isNavbarCollapsed ? '0' : '48px',
           transition: 'padding-top 0.3s cubic-bezier(0.16, 1, 0.3, 1)',
         }}
       >
@@ -148,7 +148,7 @@ function App() {
               height: '100%',
               cursor: 'col-resize',
               position: 'absolute',
-              right: '-2px', // Centered on the border
+              right: '-2px',
               top: 0,
               zIndex: 30,
               background: 'transparent',
@@ -159,7 +159,7 @@ function App() {
         
         {/* Results Pane */}
         <div style={{
-          flex: 1, // Takes remaining width
+          flex: 1,
           position: 'relative',
           background: '#050505',
           display: 'flex',
@@ -174,6 +174,17 @@ function App() {
         </div>
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<EditorView />} />
+        <Route path="/about" element={<AboutPage />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
