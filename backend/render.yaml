@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: brocode-api
+    runtime: docker
+    repo: https://github.com/YOUR_USERNAME/Brocode  # Update with your repo URL
+    rootDir: backend
+    plan: free
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: GEMINI_API_KEY
+        sync: false  # Set manually in Render dashboard
+      - key: GEMINI_MODEL
+        value: gemini-2.5-flash
+      - key: GITHUB_TOKEN
+        sync: false  # Set manually in Render dashboard
+      - key: GITHUB_WEBHOOK_SECRET
+        sync: false  # Set manually in Render dashboard
+      - key: ALLOWED_ORIGINS
+        value: https://your-frontend.vercel.app,http://localhost:5173
+      - key: DEBUG
+        value: "False"
+      - key: LOG_LEVEL
+        value: INFO
+    healthCheckPath: /api/health
